@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id                Int            @id @default(autoincrement())
+  sourceId          String         @unique
+  categoryId        Int
+  category          Category       @relation(fields: [categoryId], references: [id])
+  brand             String
+  name              String
+  flavor            String
+  weightG           Int
+  servings          Int
+  servingSizeG      Int
+  proteinPerServing Float
+  sweetener         String
+  tagsCsv           String
+  offers            Offer[]
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  @@index([categoryId])
+}
+
+model Offer {
+  id            Int            @id @default(autoincrement())
+  productId     Int
+  product       Product        @relation(fields: [productId], references: [id])
+  shopName      String
+  productUrl    String?
+  priceYen      Int
+  shippingYen   Int            @default(0)
+  totalPriceYen Int
+  inStock       Boolean        @default(true)
+  fetchedAt     DateTime       @default(now())
+  priceHistory  PriceHistory[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([productId, shopName])
+  @@index([productId])
+}
+
+model PriceHistory {
+  id            Int      @id @default(autoincrement())
+  offerId       Int
+  offer         Offer    @relation(fields: [offerId], references: [id])
+  priceYen      Int
+  shippingYen   Int      @default(0)
+  totalPriceYen Int
+  fetchedAt     DateTime @default(now())
+
+  @@index([offerId, fetchedAt])
+}
