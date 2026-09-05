@@ -28,20 +28,19 @@ model Product {
   servingSizeG      Int
   proteinPerServing Float
   sweetener         String
-  tagsCsv           String
-  offers            Offer[]
+  price             ProductPrice?
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
 
   @@index([categoryId])
 }
 
-model Offer {
+model ProductPrice {
   id            Int            @id @default(autoincrement())
   productId     Int
   product       Product        @relation(fields: [productId], references: [id])
-  shopName      String
-  productUrl    String?
+  sourceName    String
+  sourceUrl     String?
   priceYen      Int
   shippingYen   Int            @default(0)
   totalPriceYen Int
@@ -51,18 +50,18 @@ model Offer {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
-  @@unique([productId, shopName])
+  @@unique([productId])
   @@index([productId])
 }
 
 model PriceHistory {
   id            Int      @id @default(autoincrement())
-  offerId       Int
-  offer         Offer    @relation(fields: [offerId], references: [id])
+  productPriceId Int
+  productPrice   ProductPrice @relation(fields: [productPriceId], references: [id])
   priceYen      Int
   shippingYen   Int      @default(0)
   totalPriceYen Int
   fetchedAt     DateTime @default(now())
 
-  @@index([offerId, fetchedAt])
+  @@index([productPriceId, fetchedAt])
 }

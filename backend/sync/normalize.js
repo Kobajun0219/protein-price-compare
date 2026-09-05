@@ -23,10 +23,6 @@ const normalizeItem = (item, defaults = {}) => {
     throw new Error('sourceId is required')
   }
 
-  const tags = Array.isArray(item.tags)
-    ? item.tags.map((tag) => toStringValue(tag)).filter(Boolean)
-    : []
-
   return {
     sourceId,
     category: toStringValue(item.category, defaults.category || 'ホエイプロテイン'),
@@ -38,7 +34,6 @@ const normalizeItem = (item, defaults = {}) => {
     servingSizeG: toInt(item.servingSizeG, defaults.servingSizeG || 0),
     proteinPerServing: toFloat(item.proteinPerServing, defaults.proteinPerServing || 0),
     sweetener: toStringValue(item.sweetener, defaults.sweetener || '不明'),
-    tags,
     offer: {
       shopName: toStringValue(item.shopName, defaults.shopName || 'MockStore'),
       productUrl: item.productUrl ? String(item.productUrl) : null,

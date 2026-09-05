@@ -31,7 +31,6 @@ async function upsertNormalizedItem(item) {
       servingSizeG: item.servingSizeG,
       proteinPerServing: item.proteinPerServing,
       sweetener: item.sweetener,
-      tagsCsv: item.tags.join(','),
     },
     create: {
       sourceId: item.sourceId,
@@ -44,21 +43,16 @@ async function upsertNormalizedItem(item) {
       servingSizeG: item.servingSizeG,
       proteinPerServing: item.proteinPerServing,
       sweetener: item.sweetener,
-      tagsCsv: item.tags.join(','),
     },
   })
 
   const totalPriceYen = item.offer.priceYen + item.offer.shippingYen
 
-  const offer = await prisma.offer.upsert({
-    where: {
-      productId_shopName: {
-        productId: product.id,
-        shopName: item.offer.shopName,
-      },
-    },
+  const productPrice = await prisma.productPrice.upsert({
+    where: { productId: product.id },
     update: {
-      productUrl: item.offer.productUrl,
+      sourceName: item.offer.shopName,
+      sourceUrl: item.offer.productUrl,
       priceYen: item.offer.priceYen,
       shippingYen: item.offer.shippingYen,
       totalPriceYen,
@@ -67,8 +61,8 @@ async function upsertNormalizedItem(item) {
     },
     create: {
       productId: product.id,
-      shopName: item.offer.shopName,
-      productUrl: item.offer.productUrl,
+      sourceName: item.offer.shopName,
+      sourceUrl: item.offer.productUrl,
       priceYen: item.offer.priceYen,
       shippingYen: item.offer.shippingYen,
       totalPriceYen,
@@ -79,7 +73,7 @@ async function upsertNormalizedItem(item) {
 
   await prisma.priceHistory.create({
     data: {
-      offerId: offer.id,
+      productPriceId: productPrice.id,
       priceYen: item.offer.priceYen,
       shippingYen: item.offer.shippingYen,
       totalPriceYen,

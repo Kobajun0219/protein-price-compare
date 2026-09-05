@@ -1,3 +1,8 @@
+const buildRakutenSearchUrl = (query) =>
+  `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(query)}/`
+
+const sourceName = 'Rakuten検索'
+
 const proteins = [
   {
     id: 'sav-us-100',
@@ -11,7 +16,8 @@ const proteins = [
     servingSizeG: 28,
     proteinPerServing: 20,
     sweetener: 'スクラロース',
-    tags: ['Whey', '定番', '飲みやすい'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('SAVAS ホエイプロテイン100 リッチショコラ'),
   },
   {
     id: 'xpl-impact',
@@ -25,7 +31,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 21,
     sweetener: 'ステビア',
-    tags: ['Whey', '大容量', 'コスパ重視'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('X-PLOSION 100%ナチュラルホエイ ミルクチョコ'),
   },
   {
     id: 'grg-standard',
@@ -39,7 +46,8 @@ const proteins = [
     servingSizeG: 35,
     proteinPerServing: 21.8,
     sweetener: 'アセスルファムK',
-    tags: ['Whey', '初心者向け', '溶けやすい'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('Grong ホエイプロテイン100 スタンダード バニラ'),
   },
   {
     id: 'mypro-impact',
@@ -53,7 +61,8 @@ const proteins = [
     servingSizeG: 25,
     proteinPerServing: 19,
     sweetener: 'スクラロース',
-    tags: ['Whey', '海外ブランド', 'フレーバー豊富'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('Myprotein Impact Whey Protein ナチュラルチョコレート'),
   },
   {
     id: 'dns-prox',
@@ -67,7 +76,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 24.7,
     sweetener: 'ステビア',
-    tags: ['Whey', '高タンパク', 'ハイエンド'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('DNS PRO-X マンゴー'),
   },
   {
     id: 'belegend-bake',
@@ -81,7 +91,8 @@ const proteins = [
     servingSizeG: 35,
     proteinPerServing: 20.5,
     sweetener: 'スクラロース',
-    tags: ['Whey', '国産', 'フレーバー人気'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('be LEGEND ホエイプロテイン ベリベリベリー'),
   },
   {
     id: 'gold-standard',
@@ -95,7 +106,8 @@ const proteins = [
     servingSizeG: 31,
     proteinPerServing: 24,
     sweetener: 'アセスルファムK',
-    tags: ['Whey', '海外人気', '定番'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('Optimum Nutrition Gold Standard 100% Whey ダブルリッチチョコレート'),
   },
   {
     id: 'kentai-power',
@@ -109,7 +121,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 21.3,
     sweetener: 'ステビア',
-    tags: ['Whey', '部活向け', '国産'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('Kentai 100%ホエイプロテイン ストロベリー'),
   },
   {
     id: 'naturecan-clear',
@@ -123,7 +136,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 24,
     sweetener: 'スクラロース',
-    tags: ['Whey Isolate', 'クリア系', '低脂質'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('Naturecan Fitness Clear Whey Isolate ピーチティー'),
   },
   {
     id: 'valx-wpi',
@@ -137,7 +151,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 25,
     sweetener: 'スクラロース',
-    tags: ['Whey Isolate', '高純度', 'トレーニー向け'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('VALX WPI Perfect カフェオレ'),
   },
   {
     id: 'mad-protein-soy',
@@ -151,7 +166,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 20,
     sweetener: 'ステビア',
-    tags: ['Soy', '植物性', '価格重視'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('MAD PROTEIN ソイプロテイン100 黒糖きなこ'),
   },
   {
     id: 'ulta-soy-clean',
@@ -165,7 +181,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 21,
     sweetener: 'ステビア',
-    tags: ['Soy', '女性人気', '置き換え向け'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('ULTORA ソイダイエットプロテイン ほうじ茶ラテ'),
   },
   {
     id: 'savas-milk-fat0',
@@ -179,7 +196,8 @@ const proteins = [
     servingSizeG: 200,
     proteinPerServing: 15,
     sweetener: 'スクラロース',
-    tags: ['Milk', 'ドリンクタイプ', '脂肪0'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('SAVAS MILK PROTEIN 脂肪0 ココア'),
   },
   {
     id: 'morinaga-milk20',
@@ -193,7 +211,8 @@ const proteins = [
     servingSizeG: 200,
     proteinPerServing: 20,
     sweetener: 'アセスルファムK',
-    tags: ['Milk', 'ドリンクタイプ', '高タンパク'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('Morinaga inPROTEIN ミルク風味'),
   },
   {
     id: 'skim-milk-powder-protein',
@@ -207,7 +226,8 @@ const proteins = [
     servingSizeG: 30,
     proteinPerServing: 10.2,
     sweetener: 'なし',
-    tags: ['Skim Milk', '無脂肪', '料理にも使える'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('meiji おいしい牛乳 スキムミルク'),
   },
   {
     id: 'morinaga-skim-milk',
@@ -221,7 +241,8 @@ const proteins = [
     servingSizeG: 22,
     proteinPerServing: 7.6,
     sweetener: 'なし',
-    tags: ['Skim Milk', '無脂肪', '手軽サイズ'],
+    sourceName,
+    sourceUrl: buildRakutenSearchUrl('Morinaga スキムミルク'),
   },
 ]
 

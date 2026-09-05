@@ -95,7 +95,6 @@ function mapRakutenItem(raw) {
     servingSizeG,
     proteinPerServing,
     sweetener: '不明',
-    tags: ['Rakuten', `genre:${item.genreId || 'unknown'}`],
     shopName: item.shopName || 'Rakuten Shop',
     productUrl: item.itemUrl || null,
     priceYen: toInt(item.itemPrice, 0),

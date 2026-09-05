@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 async function main() {
   await prisma.priceHistory.deleteMany()
-  await prisma.offer.deleteMany()
+  await prisma.productPrice.deleteMany()
   await prisma.product.deleteMany()
   await prisma.category.deleteMany()
 
@@ -34,14 +34,14 @@ async function main() {
         servingSizeG: item.servingSizeG,
         proteinPerServing: item.proteinPerServing,
         sweetener: item.sweetener,
-        tagsCsv: (item.tags || []).join(','),
       },
     })
 
-    const offer = await prisma.offer.create({
+    const productPrice = await prisma.productPrice.create({
       data: {
         productId: product.id,
-        shopName: 'MockStore',
+        sourceName: item.sourceName || 'MockStore',
+        sourceUrl: item.sourceUrl || null,
         priceYen: item.priceYen,
         shippingYen: 0,
         totalPriceYen: item.priceYen,
@@ -52,7 +52,7 @@ async function main() {
 
     await prisma.priceHistory.create({
       data: {
-        offerId: offer.id,
+        productPriceId: productPrice.id,
         priceYen: item.priceYen,
         shippingYen: 0,
         totalPriceYen: item.priceYen,
@@ -61,7 +61,7 @@ async function main() {
     })
   }
 
-  console.log(`Seeded ${proteins.length} products into SQLite.`)
+  console.log(`Seeded ${proteins.length} products into PostgreSQL.`)
 }
 
 main()

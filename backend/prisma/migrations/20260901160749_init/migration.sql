@@ -21,7 +21,6 @@ CREATE TABLE "Product" (
     "servingSizeG" INTEGER NOT NULL,
     "proteinPerServing" REAL NOT NULL,
     "sweetener" TEXT NOT NULL,
-    "tagsCsv" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -29,11 +28,11 @@ CREATE TABLE "Product" (
 );
 
 -- CreateTable
-CREATE TABLE "Offer" (
+CREATE TABLE "ProductPrice" (
     "id" SERIAL NOT NULL,
     "productId" INTEGER NOT NULL,
-    "shopName" TEXT NOT NULL,
-    "productUrl" TEXT,
+    "sourceName" TEXT NOT NULL,
+    "sourceUrl" TEXT,
     "priceYen" INTEGER NOT NULL,
     "shippingYen" INTEGER NOT NULL DEFAULT 0,
     "totalPriceYen" INTEGER NOT NULL,
@@ -42,13 +41,13 @@ CREATE TABLE "Offer" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Offer_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ProductPrice_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "PriceHistory" (
     "id" SERIAL NOT NULL,
-    "offerId" INTEGER NOT NULL,
+    "productPriceId" INTEGER NOT NULL,
     "priceYen" INTEGER NOT NULL,
     "shippingYen" INTEGER NOT NULL DEFAULT 0,
     "totalPriceYen" INTEGER NOT NULL,
@@ -67,19 +66,19 @@ CREATE UNIQUE INDEX "Product_sourceId_key" ON "Product"("sourceId");
 CREATE INDEX "Product_categoryId_idx" ON "Product"("categoryId");
 
 -- CreateIndex
-CREATE INDEX "Offer_productId_idx" ON "Offer"("productId");
+CREATE UNIQUE INDEX "ProductPrice_productId_key" ON "ProductPrice"("productId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Offer_productId_shopName_key" ON "Offer"("productId", "shopName");
+CREATE INDEX "ProductPrice_productId_idx" ON "ProductPrice"("productId");
 
 -- CreateIndex
-CREATE INDEX "PriceHistory_offerId_fetchedAt_idx" ON "PriceHistory"("offerId", "fetchedAt");
+CREATE INDEX "PriceHistory_productPriceId_fetchedAt_idx" ON "PriceHistory"("productPriceId", "fetchedAt");
 
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Offer" ADD CONSTRAINT "Offer_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProductPrice" ADD CONSTRAINT "ProductPrice_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PriceHistory" ADD CONSTRAINT "PriceHistory_offerId_fkey" FOREIGN KEY ("offerId") REFERENCES "Offer"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "PriceHistory" ADD CONSTRAINT "PriceHistory_productPriceId_fkey" FOREIGN KEY ("productPriceId") REFERENCES "ProductPrice"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

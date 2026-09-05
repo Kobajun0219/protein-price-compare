@@ -18,6 +18,7 @@ const ALLOWED_SORT_KEYS = new Set([
   'proteinPricePerGram',
   'pricePerServing',
   'sweetener',
+  'sourceName',
 ])
 
 const normalizeSortDirection = (order) =>
@@ -32,8 +33,8 @@ const compareValues = (left, right, direction, isString = false) => {
 }
 
 const buildProductResponse = (product) => {
-  const offer = product.offers[0]
-  const priceYen = offer ? offer.totalPriceYen : 0
+  const price = product.price
+  const priceYen = price ? price.totalPriceYen : 0
   const pricePerServing = product.servings > 0 ? priceYen / product.servings : 0
   const powderPricePerGram = product.weightG > 0 ? priceYen / product.weightG : 0
   const totalProtein = product.proteinPerServing * product.servings
@@ -51,7 +52,8 @@ const buildProductResponse = (product) => {
     servingSizeG: product.servingSizeG,
     proteinPerServing: product.proteinPerServing,
     sweetener: product.sweetener,
-    tags: product.tagsCsv ? product.tagsCsv.split(',') : [],
+    sourceName: price ? price.sourceName : null,
+    sourceUrl: price ? price.sourceUrl : null,
     pricePerServing,
     powderPricePerGram,
     proteinPricePerGram,
@@ -129,12 +131,7 @@ app.get('/api/products', async (req, res) => {
       where: whereClause,
       include: {
         category: true,
-        offers: {
-          orderBy: {
-            fetchedAt: 'desc',
-          },
-          take: 1,
-        },
+        price: true,
       },
     })
 

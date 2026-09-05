@@ -34,6 +34,7 @@ const SORTABLE_COLUMNS = [
   { key: 'proteinPricePerGram', label: 'たんぱく質1g単価', type: 'number' },
   { key: 'pricePerServing', label: '1回あたり価格', type: 'number' },
   { key: 'sweetener', label: '甘味料', type: 'string' },
+  { key: 'sourceName', label: '出典', type: 'string' },
 ]
 
 const formatYen = (value) =>
@@ -182,10 +183,9 @@ function App() {
     <main className="page">
       <header className="hero">
         <p className="eyebrow">Protein Price Compare</p>
-        <h1>プロテイン比較デザイン</h1>
+        <h1>プロテイン比較</h1>
         <p className="lead">
-          まずは固定データで、価格と成分を見比べられる画面を作成しました。
-          DB接続前のMVPとしてそのまま使える構成です。
+          価格と成分を見比べられるサイトを作成しました。
         </p>
       </header>
 
@@ -269,6 +269,15 @@ function App() {
                   <td>{formatYen(item.proteinPricePerGram)}</td>
                   <td>{formatYen(item.pricePerServing)}</td>
                   <td>{item.sweetener}</td>
+                  <td>
+                    {item.sourceUrl ? (
+                      <a href={item.sourceUrl} target="_blank" rel="noreferrer">
+                        {item.sourceName || '出典'}
+                      </a>
+                    ) : (
+                      item.sourceName || '出典なし'
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -277,7 +286,7 @@ function App() {
       </section>
 
       <footer className="footer">
-        <p>Next: DB連携と絞り込み機能を追加予定</p>
+        <p></p>
       </footer>
     </main>
   )
