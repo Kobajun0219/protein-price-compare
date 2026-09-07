@@ -1,8 +1,13 @@
+const path = require('path')
+
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') })
+
 const { PrismaClient } = require('@prisma/client')
 const { normalizeItem } = require('./normalize')
 const mockProvider = require('./providers/mockProvider')
 const jsonUrlProvider = require('./providers/jsonUrlProvider')
 const rakutenProvider = require('./providers/rakutenProvider')
+const rakutenListedProvider = require('./providers/rakutenListedProvider')
 
 const prisma = new PrismaClient()
 
@@ -10,6 +15,7 @@ const providers = new Map([
   [mockProvider.name, mockProvider],
   [jsonUrlProvider.name, jsonUrlProvider],
   [rakutenProvider.name, rakutenProvider],
+  [rakutenListedProvider.name, rakutenListedProvider],
 ])
 
 async function upsertNormalizedItem(item) {

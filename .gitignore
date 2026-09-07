@@ -15,6 +15,9 @@ frontend/.env.*
 # Local DB / generated files
 backend/prisma/dev.db
 backend/prisma/*.db
+.pgdata/
+.pglog/
+backend/backend/
 
 # Logs
 *.log

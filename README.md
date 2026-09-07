@@ -59,13 +59,29 @@ npm --prefix backend run sync -- --provider mock
 npm --prefix backend run sync -- --provider jsonUrl --url https://example.com/products.json
 ```
 
-楽天APIから取り込む:
+楽天 Product Search API から取り込む:
 
 ```bash
 npm --prefix backend run sync -- --provider rakuten --keyword プロテイン --hits 20 --pages 2
 ```
 
-事前に `backend/.env` へ `RAKUTEN_APP_ID` を設定してください。
+事前に `backend/.env` へ以下を設定してください。
+
+```env
+RAKUTEN_APP_ID="..."
+RAKUTEN_ACCESS_KEY="..."
+# 任意
+RAKUTEN_AFFILIATE_ID="..."
+RAKUTEN_KEYWORD="プロテイン"
+RAKUTEN_GENRE_ID=""
+RAKUTEN_API_ENDPOINT="https://openapi.rakuten.co.jp/ichibaproduct/api/Product/Search/20250801"
+RAKUTEN_ORIGIN="https://protein-price-compare.com/"
+```
+
+このプロジェクトでは下記 API を使用します。
+
+- [楽天 商品価格ナビ製品検索 API](https://webservice.rakuten.co.jp/documentation/ichiba-product-search)
+- 認証: `applicationId` + `accessKey`
 
 APIから取り込み実行:
 
@@ -81,6 +97,26 @@ curl -X POST http://localhost:4000/api/sync \
 curl -X POST http://localhost:4000/api/sync \
   -H "Content-Type: application/json" \
   -d '{"provider":"rakuten","keyword":"プロテイン","hits":20,"pages":1}'
+```
+
+### 毎日バッチ実行 (Windows Task Scheduler)
+
+毎日06:00に実行するタスクを登録:
+
+```bash
+npm run sync:rakuten:daily
+```
+
+時間を変えて登録する例:
+
+```bash
+powershell -ExecutionPolicy Bypass -File ./scripts/register-rakuten-daily-task.ps1 -Time "23:30"
+```
+
+今すぐ1回テスト実行する例:
+
+```bash
+powershell -ExecutionPolicy Bypass -File ./scripts/register-rakuten-daily-task.ps1 -RunNow
 ```
 
 ## ビルド

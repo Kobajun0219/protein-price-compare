@@ -4,7 +4,11 @@
   "description": "Protein comparison MVP with React and Node.js",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
+    "db:start": "powershell -ExecutionPolicy Bypass -File ./scripts/start-local-postgres.ps1",
+    "db:stop": "powershell -ExecutionPolicy Bypass -File ./scripts/stop-local-postgres.ps1",
+    "sync:rakuten": "npm --prefix backend run sync -- --provider rakutenListed",
+    "sync:rakuten:daily": "powershell -ExecutionPolicy Bypass -File ./scripts/register-rakuten-daily-task.ps1",
+    "dev": "npm run db:start && concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build"

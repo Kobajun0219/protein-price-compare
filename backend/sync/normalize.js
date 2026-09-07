@@ -1,3 +1,5 @@
+const { parseRakutenItemCodeFromUrl } = require('./rakutenItemCode')
+
 const toInt = (value, fallback = 0) => {
   const num = Number(value)
   return Number.isFinite(num) ? Math.round(num) : fallback
@@ -17,7 +19,8 @@ const toStringValue = (value, fallback = '') => {
 }
 
 const normalizeItem = (item, defaults = {}) => {
-  const sourceId = toStringValue(item.id || item.sourceId)
+  const derivedSourceId = parseRakutenItemCodeFromUrl(item.productUrl || item.sourceUrl)
+  const sourceId = toStringValue(item.sourceId || item.itemCode || item.id || derivedSourceId)
 
   if (!sourceId) {
     throw new Error('sourceId is required')

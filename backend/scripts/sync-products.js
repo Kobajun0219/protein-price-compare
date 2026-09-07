@@ -1,3 +1,7 @@
+const path = require('path')
+
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') })
+
 const { syncProducts, disconnect } = require('../sync')
 
 const args = process.argv.slice(2)

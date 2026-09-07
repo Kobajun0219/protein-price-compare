@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client')
 const proteins = require('../data/proteins')
+const { parseRakutenItemCodeFromUrl } = require('../sync/rakutenItemCode')
 
 const prisma = new PrismaClient()
 
@@ -13,6 +14,7 @@ async function main() {
 
   for (const item of proteins) {
     const categoryName = item.category || 'ホエイプロテイン'
+    const sourceId = item.itemCode || item.id || parseRakutenItemCodeFromUrl(item.sourceUrl)
 
     let category = categoryByName.get(categoryName)
     if (!category) {
@@ -24,7 +26,7 @@ async function main() {
 
     const product = await prisma.product.create({
       data: {
-        sourceId: item.id,
+        sourceId,
         categoryId: category.id,
         brand: item.brand,
         name: item.name,

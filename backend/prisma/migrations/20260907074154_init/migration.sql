@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Product" ALTER COLUMN "proteinPerServing" SET DATA TYPE DOUBLE PRECISION;
